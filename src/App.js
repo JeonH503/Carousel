@@ -5,7 +5,9 @@ import Carousel from './carousel/Carousel';
 function App() {
   return (
     <div className="App">
-      <Carousel/>
+      <div className='wrap'>
+        <Carousel/>
+      </div>
     </div>
   );
 }

@@ -37,6 +37,14 @@
   }
 }
 
+.wrap {
+  height: 100vh;
+  width: 50vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
 
 
 /* Carousel */
@@ -47,12 +55,12 @@
 
 .slides {
   display: flex;
-  margin-left:79.5px;
   /* transform: translateX(); */
 }
 
 .slide {
-  flex: 0 0 18.625em;
+  flex: 0 0 100%;
+  /* width: 100%; */
 }
 
 .slide img {
