@@ -17,8 +17,10 @@ function Carousel () {
         {name:12,image:"/images/(12).webp"},
     ])
     const [animating, setAnimating] = useState(false);
-    const [slideindex, setSlideIndex] = useState(1);
+    const [slideIndex, setSlideIndex] = useState(1);
     const [slideSize, setSlideSize] = useState(0);
+    const [clickedPos, setClickedPos] = useState(0); //마우스 클릭한 좌표
+    const [dragPos, setDragPos] = useState(0) //클릭된 상태로 드래그된 좌표
 
     const slideRef = useRef(null)
 
@@ -41,11 +43,11 @@ function Carousel () {
         if(type === 'prev')
             index = -1
         
-        setSlideIndex(slideindex+index)
+        setSlideIndex(slideIndex+index)
 
         setTimeout(() => {
             setAnimating(false)
-            relocation(slideindex+index)
+            relocation(slideIndex+index)
         },500)
     }
 
@@ -57,17 +59,38 @@ function Carousel () {
             setSlideIndex(1)
     }
 
+    // 브라우저 resize 크기 다시 계산
     const handleReSize = () => {
         setSlideSize(slideRef.current.getBoundingClientRect().width)
     }
 
+    const onMouseMove = (e) => {
+        if(clickedPos)
+            setDragPos(e.clientX - clickedPos)
+    }
+
+    const onMouseDown = (e) => {
+        if(!animating)
+            setClickedPos(e.clientX)
+    }
+
+    const onMouseUp = () => {
+        if(dragPos < -50)
+            move('next')
+        else if(dragPos > 50)
+            move('prev')
+
+        setClickedPos(0)
+        setDragPos(0) 
+    }
+
     return (
-        <div ref={slideRef} className="carousel">
-            <div style={{transform:`translateX(${slideSize * -slideindex}px)`}} className={`slides ${animating ? "animating" : ""}`}>
+        <div onMouseDown={onMouseDown} onMouseUp={onMouseUp} onMouseMove={onMouseMove} onMouseLeave={onMouseUp} ref={slideRef} className="carousel">
+            <div style={{transform:`translateX(${slideSize * -slideIndex + dragPos}px)`}} className={`slides ${animating ? "animating" : ""}`}>
                 {slides.map(slide => <div className="slide">
                     <img className="thumnail" src={slide.image}></img>
                     <h4>{slide.name}</h4>
-                    <h4>{slideindex}</h4>
+                    <h4>{slideIndex}</h4>
                 </div>)}
             </div>
             <button onClick={()=>{move('prev')}}>prev</button>
