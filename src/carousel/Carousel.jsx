@@ -16,7 +16,6 @@ function Carousel () {
         {name:11,image:"/images/(11).webp"},
         {name:12,image:"/images/(12).webp"},
     ])
-    const [tranlatex, setTranlatex] = useState(0);
     const [animating, setAnimating] = useState(false);
     const [slideindex, setSlideIndex] = useState(1);
     const [slideSize, setSlideSize] = useState(0);
@@ -24,10 +23,12 @@ function Carousel () {
     const slideRef = useRef(null)
 
     useEffect(() => {
+        // slides 맨앞, 맨뒤에 하나씩 더 추가
         setSlides([slides[slides.length-1],...slides,slides[0]])
-        let size = slideRef.current.offsetWidth
-        setTranlatex(-size)
-        setSlideSize(size)
+        setSlideSize(slideRef.current.getBoundingClientRect().width)
+
+        // window resize event 추가
+        window.addEventListener('resize', handleReSize)
     },[])
 
     const move = (type) => {
@@ -41,30 +42,29 @@ function Carousel () {
             index = -1
         
         setSlideIndex(slideindex+index)
-        setTranlatex(orgSize => orgSize+slideSize*-1*index)
 
         setTimeout(() => {
             setAnimating(false)
             relocation(slideindex+index)
-        },750)
+        },500)
     }
 
+    // index가 맨끝 혹은 맨앞으로 이동될 경우 index및 translatex 이동
     const relocation = (index) => {
-        if(index === 0) {
-            let size = slides.length-3
-            setSlideIndex(size)
-            setTranlatex(slideSize*-1*(size+1))
-        } else if (index === slides.length-2) {
-            let size = 1
-            setSlideIndex(size)
-            setTranlatex(slideSize*-1*size)
-        }
+        if(index === 0)
+            setSlideIndex(slides.length-2)
+        else if(index === slides.length-1)
+            setSlideIndex(1)
+    }
+
+    const handleReSize = () => {
+        setSlideSize(slideRef.current.getBoundingClientRect().width)
     }
 
     return (
-        <div className="carousel">
-            <div style={{transform:`translateX(${tranlatex}px)`}} className={`slides ${animating ? "animating" : ""}`}>
-                {slides.map(slide => <div ref={slideRef} className="slide">
+        <div ref={slideRef} className="carousel">
+            <div style={{transform:`translateX(${slideSize * -slideindex}px)`}} className={`slides ${animating ? "animating" : ""}`}>
+                {slides.map(slide => <div className="slide">
                     <img className="thumnail" src={slide.image}></img>
                     <h4>{slide.name}</h4>
                     <h4>{slideindex}</h4>

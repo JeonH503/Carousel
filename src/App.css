@@ -68,5 +68,5 @@
 }
 
 .animating {
-  transition : transform 0.75s ease 0s;
+  transition : transform 0.50s ease 0s;
 }
