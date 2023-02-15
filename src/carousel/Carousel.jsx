@@ -90,11 +90,12 @@ function Carousel () {
                 {slides.map(slide => <div className="slide">
                     <img className="thumnail" src={slide.image}></img>
                     <h4>{slide.name}</h4>
-                    <h4>{slideIndex}</h4>
                 </div>)}
             </div>
-            <button onClick={()=>{move('prev')}}>prev</button>
-            <button onClick={()=>{move('next')}}>next</button>
+            <div className="buttons">
+                <button onClick={()=>{move('prev')}}>prev</button>
+                <button onClick={()=>{move('next')}}>next</button>
+            </div>
         </div>
     )
 }
