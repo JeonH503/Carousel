@@ -77,12 +77,36 @@
 }
 
 .slides:hover ~ .buttons {
-  background: black;
+  display: block;
+}
+
+.carousel .buttons:hover {
   display: block;
 }
 
 .carousel .buttons {
+  width: 100%;;
   position: absolute;
   top:0px;
   display:none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: 0;
 }
+
+.carousel .buttons button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: 0;
+  background: rgb(0, 0, 0, 0.5);
+}
+
+.carousel .buttons .left {
+  float: left;
+} 
+
+.carousel .buttons .right {
+  float: right;
+} 

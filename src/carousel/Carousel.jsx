@@ -93,8 +93,8 @@ function Carousel () {
                 </div>)}
             </div>
             <div className="buttons">
-                <button onClick={()=>{move('prev')}}>prev</button>
-                <button onClick={()=>{move('next')}}>next</button>
+                <button className="left" onClick={()=>{move('prev')}}>prev</button>
+                <button className="right" onClick={()=>{move('next')}}>next</button>
             </div>
         </div>
     )
