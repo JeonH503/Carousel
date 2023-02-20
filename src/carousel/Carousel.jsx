@@ -26,11 +26,13 @@ function Carousel () {
 
     useEffect(() => {
         // slides 맨앞, 맨뒤에 하나씩 더 추가
-        setSlides([slides[slides.length-1],...slides,slides[0]])
+        setSlides([slides[slides.length-1], ...slides,slides[0]])
         setSlideSize(slideRef.current.getBoundingClientRect().width)
 
         // window resize event 추가
         window.addEventListener('resize', handleReSize)
+
+        console.log(slideRef.current.getBoundingClientRect().width)
     },[])
 
     const move = (type) => {
@@ -88,13 +90,18 @@ function Carousel () {
         <div onMouseDown={onMouseDown} onMouseUp={onMouseUp} onMouseMove={onMouseMove} onMouseLeave={onMouseUp} ref={slideRef} className="carousel">
             <div style={{transform:`translateX(${slideSize * -slideIndex + dragPos}px)`}} className={`slides ${animating ? "animating" : ""}`}>
                 {slides.map(slide => <div className="slide">
-                    <img className="thumnail" src={slide.image}></img>
-                    <h4>{slide.name}</h4>
+                    {/* TODO  이미지 크기 반응형 대응 필요*/}
+                    {/* <div className="imgWrap"> */}
+                        <img alt={slide.name} className="thumnail" src={slide.image}></img>
+                    {/* </div> */}
+                    {/* <h4>{slide.name}</h4> */}
                 </div>)}
             </div>
             <div className="buttons">
-                <button className="left" onClick={()=>{move('prev')}}>prev</button>
-                <button className="right" onClick={()=>{move('next')}}>next</button>
+                <div className="buttonsflex">
+                    <button className="left" onClick={()=>{move('prev')}}>prev</button>
+                    <button className="right" onClick={()=>{move('next')}}>next</button>
+                </div>
             </div>
         </div>
     )

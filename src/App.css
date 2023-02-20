@@ -52,6 +52,7 @@
   position: relative;
   overflow: hidden;
   width: 100%;
+  /* height: 100%; */
 }
 
 .slides {
@@ -66,6 +67,7 @@
 
 .slide img {
   width: 100%;
+  height: 100%;
   -webkit-user-drag: none;
   -khtml-user-drag: none;
   -moz-user-drag: none;
@@ -85,10 +87,11 @@
 }
 
 .carousel .buttons {
-  width: 100%;;
+  width: 100%;
+  height: 100%;
   position: absolute;
   top:0px;
-  display:none;
+  display:block;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -101,12 +104,20 @@
   appearance: none;
   border: 0;
   background: rgb(0, 0, 0, 0.5);
+  height: 30%;
 }
 
-.carousel .buttons .left {
+.carousel .buttons .buttonsflex {
+  display: flex;
+  height: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* .carousel .buttons .left {
   float: left;
 } 
 
 .carousel .buttons .right {
   float: right;
-} 
+}  */
