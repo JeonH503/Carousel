@@ -5,9 +5,7 @@ function App() {
   return (
     <div className="App">
       <div className='wrap'>
-        {/* <div style={{height:"50vh"}}> */}
           <Carousel/>
-        {/* </div> */}
       </div>
     </div>
   );

@@ -105,19 +105,46 @@
   border: 0;
   background: rgb(0, 0, 0, 0.5);
   height: 30%;
+  font-size: 20px;
+  font-weight: 300;
+  color:white;
 }
 
 .carousel .buttons .buttonsflex {
   display: flex;
   height: 100%;
-  justify-content: space-between;
   align-items: center;
 }
 
-/* .carousel .buttons .left {
+.carousel .buttons .buttonsflex.left {
+  justify-content:left
+}
+
+.carousel .buttons .buttonsflex.right {
+  justify-content:right;
+}
+
+.carousel .buttons .left {
   float: left;
 } 
 
 .carousel .buttons .right {
   float: right;
-}  */
+} 
+
+@media (max-width: 1024px) {
+  .carousel .buttons button {
+    width: 30px;
+  }
+}
+
+@media (max-width: 768px) {    
+  .carousel .buttons button {
+    width: 20px;
+  }
+}
+@media (max-width: 480px) {
+  .carousel .buttons button {
+    width: 10px;
+  }
+}

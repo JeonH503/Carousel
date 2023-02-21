@@ -31,8 +31,6 @@ function Carousel () {
 
         // window resize event 추가
         window.addEventListener('resize', handleReSize)
-
-        console.log(slideRef.current.getBoundingClientRect().width)
     },[])
 
     const move = (type) => {
@@ -90,18 +88,19 @@ function Carousel () {
         <div onMouseDown={onMouseDown} onMouseUp={onMouseUp} onMouseMove={onMouseMove} onMouseLeave={onMouseUp} ref={slideRef} className="carousel">
             <div style={{transform:`translateX(${slideSize * -slideIndex + dragPos}px)`}} className={`slides ${animating ? "animating" : ""}`}>
                 {slides.map(slide => <div className="slide">
-                    {/* TODO  이미지 크기 반응형 대응 필요*/}
-                    {/* <div className="imgWrap"> */}
-                        <img alt={slide.name} className="thumnail" src={slide.image}></img>
-                    {/* </div> */}
-                    {/* <h4>{slide.name}</h4> */}
+                    {/* TODO  이미지 크기 반응형 대응 필요*/}   
+                    <img alt={slide.name} className="thumnail" src={slide.image}></img>
                 </div>)}
             </div>
             <div className="buttons">
-                <div className="buttonsflex">
-                    <button className="left" onClick={()=>{move('prev')}}>prev</button>
-                    <button className="right" onClick={()=>{move('next')}}>next</button>
-                </div>
+                {/* <div className="buttonsflex"> */}
+                    <div className="buttonsflex left">
+                        <button className="left" onClick={()=>{move('prev')}}>&lt;</button>
+                    </div>
+                    <div className="buttonsflex right">
+                        <button className="right" onClick={()=>{move('next')}}>&gt;</button>
+                    </div>
+                {/* </div> */}
             </div>
         </div>
     )
