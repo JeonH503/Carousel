@@ -1,5 +1,42 @@
 import {useState,useEffect,useRef} from "react";
+import styled from "styled-components"; 
 
+const Button = styled.button`
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: 0;
+    background: rgb(0, 0, 0, 0.5);
+    height: 30%;
+    font-size: 20px;
+    font-weight: 300;
+    color:white;
+    float:${(props)=>props.float};
+`
+
+const ButtonFlex = styled.div`
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content:${(props)=>props.justify};
+    float:${(props)=>props.justify};
+`
+
+const Buttons = styled.div`
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top:0px;
+    display:block;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: 0;
+
+    &:hover {
+        display: block;
+    }
+`
 
 function Carousel () {
     const [slides, setSlides] = useState([
@@ -92,17 +129,17 @@ function Carousel () {
                     <img alt={slide.name} className="thumnail" src={slide.image}></img>
                 </div>)}
             </div>
-            <div className="buttons">
-                {/* <div className="buttonsflex"> */}
-                    <div className="buttonsflex left">
-                        <button className="left" onClick={()=>{move('prev')}}>&lt;</button>
-                    </div>
-                    <div className="buttonsflex right">
-                        <button className="right" onClick={()=>{move('next')}}>&gt;</button>
-                    </div>
-                {/* </div> */}
-            </div>
+            
+            <Buttons>
+                <ButtonFlex justify="left">
+                    <Button float="left" onClick={()=>{move('prev')}}>&lt;</Button>
+                </ButtonFlex>
+                <ButtonFlex justify="right">
+                    <Button float="right" onClick={()=>{move('next')}}>&gt;</Button>
+                </ButtonFlex>
+            </Buttons>
         </div>
+
     )
 }
 

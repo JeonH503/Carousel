@@ -110,25 +110,25 @@
   color:white;
 }
 
-.carousel .buttons .buttonsflex {
+.carousel .buttonsflex {
   display: flex;
   height: 100%;
   align-items: center;
 }
 
-.carousel .buttons .buttonsflex.left {
+.carousel .buttonsflex.left {
   justify-content:left
 }
 
-.carousel .buttons .buttonsflex.right {
+.carousel .buttonsflex.right {
   justify-content:right;
 }
 
-.carousel .buttons .left {
+.carousel .left {
   float: left;
 } 
 
-.carousel .buttons .right {
+.carousel .right {
   float: right;
 } 
 
