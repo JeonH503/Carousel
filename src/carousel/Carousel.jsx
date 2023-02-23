@@ -1,4 +1,4 @@
-import {useState,useEffect,useRef} from "react";
+import React,{useState,useEffect,useRef} from "react";
 import styled from "styled-components"; 
 
 const Button = styled.button`
@@ -12,6 +12,7 @@ const Button = styled.button`
     font-weight: 300;
     color:white;
     float:${(props)=>props.float};
+    min-height:30px;
 `
 
 const ButtonFlex = styled.div`
@@ -38,21 +39,28 @@ const Buttons = styled.div`
     }
 `
 
-function Carousel () {
-    const [slides, setSlides] = useState([
-        {name:1,image:"/images/(1).webp"},
-        {name:2,image:"/images/(2).webp"},
-        {name:3,image:"/images/(3).webp"},
-        {name:4,image:"/images/(4).webp"},
-        {name:5,image:"/images/(5).webp"},
-        {name:6,image:"/images/(6).webp"},
-        {name:7,image:"/images/(7).webp"},
-        {name:8,image:"/images/(8).webp"},
-        {name:9,image:"/images/(9).webp"},
-        {name:10,image:"/images/(10).webp"},
-        {name:11,image:"/images/(11).webp"},
-        {name:12,image:"/images/(12).webp"},
-    ])
+const CarouselWrap = styled.div`
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+`
+
+const Slides = styled.div`
+    display: flex;
+    transform:translateX(${(props)=>props.slideSize * -props.slideIndex + props.dragPos}px);
+    ${(props)=>props.animating ? "transition : transform 0.50s ease 0s;" : ''}
+`
+
+const Slide =styled.div`
+    flex: 0 0 100%;
+    min-height:30px;
+
+    & *{
+        width: 100%;
+    }
+` 
+
+function Carousel ({children}) {
     const [animating, setAnimating] = useState(false);
     const [slideIndex, setSlideIndex] = useState(1);
     const [slideSize, setSlideSize] = useState(0);
@@ -62,8 +70,6 @@ function Carousel () {
     const slideRef = useRef(null)
 
     useEffect(() => {
-        // slides 맨앞, 맨뒤에 하나씩 더 추가
-        setSlides([slides[slides.length-1], ...slides,slides[0]])
         setSlideSize(slideRef.current.getBoundingClientRect().width)
 
         // window resize event 추가
@@ -90,9 +96,10 @@ function Carousel () {
 
     // index가 맨끝 혹은 맨앞으로 이동될 경우 index및 translatex 이동
     const relocation = (index) => {
+        console.log(index, children.length)
         if(index === 0)
-            setSlideIndex(slides.length-2)
-        else if(index === slides.length-1)
+            setSlideIndex(children.length)
+        else if(index === children.length+1)
             setSlideIndex(1)
     }
 
@@ -121,14 +128,24 @@ function Carousel () {
         setDragPos(0) 
     }
 
+    useEffect(() => {
+    },[])
+
+    const RenderSlides = () => {
+        // slides 맨앞, 맨뒤에 하나씩 더 추가
+        let temp = [children[children.length-1], ...children,children[0]]
+        return React.Children.map(temp, (e) => {
+            return <Slide>
+                {e}
+            </Slide>
+        })
+    }
+
     return (
-        <div onMouseDown={onMouseDown} onMouseUp={onMouseUp} onMouseMove={onMouseMove} onMouseLeave={onMouseUp} ref={slideRef} className="carousel">
-            <div style={{transform:`translateX(${slideSize * -slideIndex + dragPos}px)`}} className={`slides ${animating ? "animating" : ""}`}>
-                {slides.map(slide => <div className="slide">
-                    {/* TODO  이미지 크기 반응형 대응 필요*/}   
-                    <img alt={slide.name} className="thumnail" src={slide.image}></img>
-                </div>)}
-            </div>
+        <CarouselWrap onMouseDown={onMouseDown} onMouseUp={onMouseUp} onMouseMove={onMouseMove} onMouseLeave={onMouseUp} ref={slideRef}>
+            <Slides slideSize={slideSize} slideIndex={slideIndex} dragPos={dragPos} animating={animating}>
+                <RenderSlides/>
+            </Slides>
             
             <Buttons>
                 <ButtonFlex justify="left">
@@ -138,7 +155,7 @@ function Carousel () {
                     <Button float="right" onClick={()=>{move('next')}}>&gt;</Button>
                 </ButtonFlex>
             </Buttons>
-        </div>
+        </CarouselWrap>
 
     )
 }
