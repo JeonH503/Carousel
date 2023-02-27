@@ -13,6 +13,8 @@ const Button = styled.button`
     color:white;
     float:${(props)=>props.float};
     min-height:30px;
+    display:none;
+    cursor:pointer;
 `
 
 const ButtonFlex = styled.div`
@@ -28,14 +30,13 @@ const Buttons = styled.div`
     height: 100%;
     position: absolute;
     top:0px;
-    display:block;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
     border: 0;
 
-    &:hover {
-        display: block;
+    &:hover div button {
+        display:block;
     }
 `
 
