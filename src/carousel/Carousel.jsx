@@ -44,12 +44,13 @@ const CarouselWrap = styled.div`
     position: relative;
     overflow: hidden;
     width: 100%;
+    user-select:none;
 `
 
 const Slides = styled.div`
     display: flex;
     transform:translateX(${(props)=>props.slideSize * -props.slideIndex + props.dragPos}px);
-    ${(props)=>props.animating ? "transition : transform 0.50s ease 0s;" : ''}
+    ${(props)=>props.animating ? "transition : transform 0.30s ease 0s;" : ''}
 `
 
 const Slide =styled.div`
@@ -92,7 +93,7 @@ function Carousel ({children}) {
         setTimeout(() => {
             setAnimating(false)
             relocation(slideIndex+index)
-        },500)
+        },300)
     }
 
     // index가 맨끝 혹은 맨앞으로 이동될 경우 index및 translatex 이동
