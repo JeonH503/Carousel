@@ -1,4 +1,4 @@
-import React,{useState,useEffect,useRef} from "react";
+import React,{useState,useEffect,useRef,useMemo} from "react";
 import styled from "styled-components"; 
 
 const Button = styled.button`
@@ -47,11 +47,21 @@ const CarouselWrap = styled.div`
     user-select:none;
 `
 
-const Slides = styled.div`
+// const Slides = styled.div`
+//     display: flex;
+//     transform:translateX(${(props)=>props.slideSize * -props.slideIndex + props.dragPos}px);
+//     ${(props)=>props.animating ? "transition : transform 0.30s ease 0s;" : ''}
+// `
+
+const Slides = styled.div.attrs(props => ({
+    style: {
+        transform: `translateX(${props.slideSize * -props.slideIndex + props.dragPos}px)`,
+        transition : props.animating ? "transform 0.30s ease 0s" : "none"
+    }
+}))`
     display: flex;
-    transform:translateX(${(props)=>props.slideSize * -props.slideIndex + props.dragPos}px);
-    ${(props)=>props.animating ? "transition : transform 0.30s ease 0s;" : ''}
 `
+
 
 const Slide =styled.div`
     flex: 0 0 100%;
@@ -98,10 +108,9 @@ function Carousel ({children}) {
 
     // index가 맨끝 혹은 맨앞으로 이동될 경우 index및 translatex 이동
     const relocation = (index) => {
-        console.log(index, children.length)
         if(index === 0)
-            setSlideIndex(children.length)
-        else if(index === children.length+1)
+            setSlideIndex(Array.isArray(children) ? children.length : 1)
+        else if(index === (Array.isArray(children) ? children.length+1 : 2))
             setSlideIndex(1)
     }
 
@@ -130,23 +139,29 @@ function Carousel ({children}) {
         setDragPos(0) 
     }
 
-    useEffect(() => {
-    },[])
-
-    const RenderSlides = () => {
+    const RenderSlides = useMemo(() => {
         // slides 맨앞, 맨뒤에 하나씩 더 추가
-        let temp = [children[children.length-1], ...children,children[0]]
-        return React.Children.map(temp, (e) => {
-            return <Slide>
-                {e}
-            </Slide>
-        })
-    }
+        let childrens
+        if(children) {
+            let temp = []
+            if(Array.isArray(children))
+                temp = [children[children.length-1], ...children,children[0]]
+            else
+                temp = [children,children,children]
+            childrens = temp.map((e,i) => {
+                return <Slide key={i}>
+                    {e}
+                </Slide>
+            })
+        }
+
+        return <>{childrens}</>
+    },[children])
 
     return (
         <CarouselWrap onMouseDown={onMouseDown} onMouseUp={onMouseUp} onMouseMove={onMouseMove} onMouseLeave={onMouseUp} ref={slideRef}>
             <Slides slideSize={slideSize} slideIndex={slideIndex} dragPos={dragPos} animating={animating}>
-                <RenderSlides/>
+                {RenderSlides}
             </Slides>
             
             <Buttons>
