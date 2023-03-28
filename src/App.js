@@ -21,7 +21,7 @@ function App() {
     <div className="App">
       <div className='wrap'>
           <Carousel>
-            {slides.map(slide => <img alt={slide.name} className="thumnail" src={slide.image}></img>)}
+            {slides.map(slide => <img alt={slide.name} key={slide.name} className="thumnail" src={slide.image}></img>)}
           </Carousel>
       </div>
     </div>

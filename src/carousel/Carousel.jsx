@@ -139,6 +139,26 @@ function Carousel ({children}) {
         setDragPos(0) 
     }
 
+    const onTouchStart = (e) => {
+        if(!animating)
+            setClickedPos(e.touches[0].clientX)
+    }
+
+    const onTouchMove = (e) => {
+        if(clickedPos)
+            setDragPos(e.touches[0].clientX - clickedPos)   
+    }
+
+    const onTouchEnd = () => {
+        if(dragPos < -50)
+            move('next')
+        else if(dragPos > 50)
+            move('prev')
+
+        setClickedPos(0)
+        setDragPos(0) 
+    }
+
     const RenderSlides = useMemo(() => {
         // slides 맨앞, 맨뒤에 하나씩 더 추가
         let childrens
@@ -159,7 +179,7 @@ function Carousel ({children}) {
     },[children])
 
     return (
-        <CarouselWrap onMouseDown={onMouseDown} onMouseUp={onMouseUp} onMouseMove={onMouseMove} onMouseLeave={onMouseUp} ref={slideRef}>
+        <CarouselWrap onTouchEnd={onTouchEnd} onTouchStart={onTouchStart} onTouchMove={onTouchMove} onMouseDown={onMouseDown} onMouseUp={onMouseUp} onMouseMove={onMouseMove} onMouseLeave={onMouseUp} ref={slideRef}>
             <Slides slideSize={slideSize} slideIndex={slideIndex} dragPos={dragPos} animating={animating}>
                 {RenderSlides}
             </Slides>
