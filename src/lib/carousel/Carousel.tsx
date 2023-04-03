@@ -1,6 +1,6 @@
 import React,{useMemo,useState,useEffect,useRef,MouseEvent,TouchEvent} from "react";
 import styled from "styled-components"; 
-import Loader from "../loader/loader";
+import Loader from "../../loader/loader";
 
 interface slideProps {
     slideSize:number;
@@ -74,7 +74,7 @@ const Slide =styled.div`
     }
 ` 
 
-function Carousel ({children}:{children:React.ReactNode[] | React.ReactNode}) {
+function Carousel ({children}:{children?:React.ReactNode[] | React.ReactNode}) {
     const [animating, setAnimating] = useState(false);
     const [slideIndex, setSlideIndex] = useState(1);
     const [slideSize, setSlideSize] = useState(0);

@@ -1,5 +1,5 @@
 import './App.css';
-import Carousel from './carousel/Carousel';
+import Carousel from './lib/carousel/Carousel';
 import React from "react";
 
 const slides = [
