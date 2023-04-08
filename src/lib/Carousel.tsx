@@ -1,6 +1,6 @@
 import React,{useMemo,useState,useEffect,useRef,MouseEvent,TouchEvent} from "react";
 import styled from "styled-components"; 
-import Loader from "../../loader/loader";
+import Loader from "../loader/loader";
 
 interface slideProps {
     slideSize:number;

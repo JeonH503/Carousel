@@ -1,10 +1,10 @@
 {
   "name": "react-carousel-show",
   "description": "this library is react carousel library",
-  "version": "1.0.1",
+  "version": "1.0.13",
   "private": false,
-  "main": "dist/Carousel.js",
-  "types": "dist/Carousel.d.ts",
+  "main": "dist/lib/Carousel.js",
+  "types": "dist/lib/Carousel.d.ts",
   "browser": "./browser/specific/main.js",
   "keywords": ["react","slide","carousel","show"],
   "author":"JeonH503",

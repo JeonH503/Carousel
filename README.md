@@ -10,7 +10,7 @@ This library is a simple carousel library.
 
 ```
 import './App.css';
-import Carousel from './lib/carousel/Carousel';
+import Carousel from 'react-carousel-show';
 import React from "react";
 
 const slides = [
